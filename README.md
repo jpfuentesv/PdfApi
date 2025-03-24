@@ -26,7 +26,7 @@ Este proyecto es una API REST construida en **ASP.NET Core 8.0** que permite gen
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/tuusuario/PdfApi.git
+git clone https://github.com/jpfuentesv/PdfApi
 cd PdfApi
 
 # Restaurar dependencias y compilar

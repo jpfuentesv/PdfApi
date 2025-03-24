@@ -1,0 +1,45 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VSCode settings
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# ASP.NET Core secrets
+secrets.json
+
+# Log files
+*.log
+
+# Rider files
+.idea/
+
+# JetBrains Rider
+*.sln.iml
+
+# NuGet
+*.nupkg
+.nuget/
+packages/
+project.lock.json
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Other
+*.vs/

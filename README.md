@@ -66,17 +66,28 @@ http://localhost:5158/
 
 ```
 PdfApi/
+│
 ├── Controllers/
-│   └── PdfController.cs
+│   └── PdfController.cs         # Controlador principal
+│
 ├── Models/
-│   └── HtmlRequest.cs
+│   ├── HtmlRequest.cs          # Modelo de solicitud con HTML, tamaño y nombre
+│   └── PageSizeOption.cs       # Validación y selección de tamaño de página
+│
 ├── Services/
-│   └── PdfService.cs
+│   ├── IPdfService.cs          # Interfaz del servicio
+│   └── PdfService.cs           # Implementación de PDF con iText
+│
 ├── SwaggerExamples/
-│   └── HtmlRequestExample.cs
+│   └── HtmlRequestExample.cs   # Ejemplo para Swagger UI
+│
 ├── Utils/
-│   └── RequestValidator.cs
-├── Program.cs
+│   └── RequestValidator.cs     # Validaciones de la solicitud
+│
+├── Program.cs                  # Configuración de la app
+├── appsettings.json
+├── appsettings.Development.json
+└── README.md   
 ```
 
 ---

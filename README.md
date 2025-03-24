@@ -86,8 +86,7 @@ PdfApi/
 │
 ├── Program.cs                  # Configuración de la app
 ├── appsettings.json
-├── appsettings.Development.json
-└── README.md   
+├── appsettings.Development.json  
 ```
 
 ---

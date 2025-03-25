@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PdfApi.Models;
 
@@ -19,11 +20,30 @@ public static class RequestValidator
         return null;
     }
 
+    public static async Task<(string? Html, IActionResult? Error)> ValidarArchivo(
+        IFormFile file,
+        string fileName,
+        string pageSize
+    )
+    {
+        if (file == null || file.Length == 0)
+            return (null, Error("Debe adjuntar un archivo HTML."));
+
+        if (string.IsNullOrWhiteSpace(fileName))
+            return (null, Error("El nombre del archivo (fileName) es obligatorio."));
+
+        if (!PageSizeOption.EsValido(pageSize))
+            return (null, Error("El tamaño de página debe ser 'carta', 'oficio' o 'a4'."));
+
+        using StreamReader reader = new(file.OpenReadStream());
+        string content = await reader.ReadToEndAsync();
+
+        if (!content.TrimStart().StartsWith("<!DOCTYPE html", StringComparison.OrdinalIgnoreCase))
+            return (null, Error("El archivo no contiene un HTML válido."));
+
+        return (content, null);
+    }
+
     private static IActionResult Error(string mensaje) =>
-        new ContentResult
-        {
-            StatusCode = StatusCodes.Status400BadRequest,
-            ContentType = "application/json",
-            Content = $"{{ \"error\": \"{mensaje}\" }}",
-        };
+        new BadRequestObjectResult(new { error = mensaje });
 }

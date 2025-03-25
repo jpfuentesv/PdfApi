@@ -1,0 +1,104 @@
+openapi: 3.0.4
+info:
+  title: PdfApi
+  description: API para generar PDFs desde HTML usando iText 7
+  version: v1
+paths:
+  /api/Pdf/html-json:
+    post:
+      tags:
+        - Pdf
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HtmlRequest'
+            example:
+              Html: |-
+                <!DOCTYPE html>
+                <html>
+                <head><title>Demo</title></head>
+                <body>
+                    <h1 style='color: green;'>PDF generado desde Swagger</h1>
+                    <p>Este contenido viene del ejemplo configurado.</p>
+                </body>
+                </html>
+              PageSize: oficio
+              FileName: pdf-demo-swagger
+          text/json:
+            schema:
+              $ref: '#/components/schemas/HtmlRequest'
+            example:
+              Html: |-
+                <!DOCTYPE html>
+                <html>
+                <head><title>Demo</title></head>
+                <body>
+                    <h1 style='color: green;'>PDF generado desde Swagger</h1>
+                    <p>Este contenido viene del ejemplo configurado.</p>
+                </body>
+                </html>
+              PageSize: oficio
+              FileName: pdf-demo-swagger
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/HtmlRequest'
+            example:
+              Html: |-
+                <!DOCTYPE html>
+                <html>
+                <head><title>Demo</title></head>
+                <body>
+                    <h1 style='color: green;'>PDF generado desde Swagger</h1>
+                    <p>Este contenido viene del ejemplo configurado.</p>
+                </body>
+                </html>
+              PageSize: oficio
+              FileName: pdf-demo-swagger
+      responses:
+        '200':
+          description: OK
+  /api/Pdf/html-file:
+    post:
+      tags:
+        - Pdf
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                htmlFile:
+                  type: string
+                  format: binary
+                pageSize:
+                  type: string
+                fileName:
+                  type: string
+            encoding:
+              htmlFile:
+                style: form
+              pageSize:
+                style: form
+              fileName:
+                style: form
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+components:
+  schemas:
+    HtmlRequest:
+      type: object
+      properties:
+        Html:
+          type: string
+          nullable: true
+        PageSize:
+          type: string
+          nullable: true
+        FileName:
+          type: string
+          nullable: true
+      additionalProperties: false

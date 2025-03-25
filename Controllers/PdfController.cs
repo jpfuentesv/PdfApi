@@ -18,9 +18,11 @@ public class PdfController : ControllerBase
         _pdfService = pdfService;
     }
 
+    // Endpoint para generar un PDF a partir de un string HTML
     [HttpPost("html-json")]
     [SwaggerRequestExample(typeof(HtmlRequest), typeof(HtmlRequestExample))]
     [Produces("application/pdf")]
+    [Consumes("application/json")]
     public IActionResult GenerarPdfDesdeHtml([FromBody] HtmlRequest request)
     {
         IActionResult? validationResult = RequestValidator.Validar(request);
@@ -31,5 +33,27 @@ public class PdfController : ControllerBase
         string fileName = $"{request.FileName}.pdf";
 
         return File(pdfBytes, "application/pdf", fileName);
+    }
+
+    // Endpoint para generar un PDF a partir de un archivo HTML
+    [HttpPost("html-file")]
+    [Produces("application/pdf")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> GenerarPdfDesdeArchivo(
+        IFormFile htmlFile,
+        [FromForm] string pageSize,
+        [FromForm] string fileName
+    )
+    {
+        var (htmlContent, error) = await RequestValidator.ValidarArchivo(
+            htmlFile,
+            fileName,
+            pageSize
+        );
+        if (error is not null)
+            return error;
+
+        byte[] pdf = _pdfService.CrearPdfDesdeHtml(htmlContent!, pageSize);
+        return File(pdf, "application/pdf", $"{fileName}.pdf");
     }
 }

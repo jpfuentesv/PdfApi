@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "599a66f0-b143-4ce2-8619-ee308309053e",
+		"name": "PdfApi",
+		"description": "**📄 Generar PDF desde HTML embebido (JSON)**\n\n**Método**: POST\n\n**URL**: http://localhost:5158/api/pdf/html-json\n\n**Content-Type**: application/json\n\n**Body (JSON)**\n\n```\n{\n  \"html\": \"<!DOCTYPE html><html>...</html>\",\n  \"fileName\": \"demo-certificado\",\n  \"pageSize\": \"oficio\"\n}\n\n ```\n\n  \n\n**🔸Parámetros:**\n\n• html _(string)_: Contenido HTML completo que se convertirá en PDF (requiere ).\n\n• fileName _(string)_: Nombre del archivo de salida sin extensión.\n\n• pageSize _(string)_: Tamaño del PDF (carta, oficio, a4).  \n\n**✅ Respuesta:**\n\n• Código: 200 OK\n\n• Tipo: application/pdf\n\n• Descarga directa del archivo PDF generado.\n\n---\n\n**📎 Generar PDF desde archivo HTML (multipart/form-data)**\n\n**Método**: POST\n\n**URL**: http://localhost:5158/api/pdf/html-file\n\n**Content-Type**: multipart/form-data\n\n**Body (form-data)**\n\n| **Key** | **Tipo** | **Valor Ejemplo** |\n| --- | --- | --- |\n| htmlFile | File | demo_certificado.html |\n| fileName | Text | demo-certificado |\n| pageSize | Text | oficio |\n\n**🔸Parámetros:**\n\n• htmlFile _(file)_: Archivo HTML válido con contenido completo ( requerido).\n\n• fileName _(string)_: Nombre del archivo final sin extensión .pdf.\n\n• pageSize _(string)_: Tamaño de página. Opciones válidas: carta, oficio, a4.\n\n**✅ Respuesta:**\n\n• Código: 200 OK\n\n• Tipo: application/pdf\n\n• Archivo descargable directamente.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21354230"
+	},
+	"item": [
+		{
+			"name": "Archivo",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "htmlFile",
+							"type": "file",
+							"src": "postman-cloud:///1f00654e-9ab4-42e0-88b8-0138f5c40e52"
+						},
+						{
+							"key": "fileName",
+							"value": "demo-certificado",
+							"type": "text"
+						},
+						{
+							"key": "pageSize",
+							"value": "oficio",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5158/api/pdf/html-file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5158",
+					"path": [
+						"api",
+						"pdf",
+						"html-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JSON",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"html\": \"<!DOCTYPE html>\\n<html lang=\\\"es\\\">\\n<head>\\n    <meta charset=\\\"UTF-8\\\">\\n    <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\">\\n    <title>Certificado Duplicado Tarjeta Turismo</title>\\n    <style>\\n        body {\\n            font-family: Arial, sans-serif;\\n            margin: 40px;\\n            padding: 20px;\\n            border: 2px solid black;\\n            max-width: 800px;\\n        }\\n        h1, h2 {\\n            text-align: center;\\n        }\\n        .header {\\n            text-align: center;\\n            margin-bottom: 20px;\\n        }\\n        .header img {\\n            width: 120px;\\n        }\\n        .header h1 {\\n            font-size: 18px;\\n            margin: 5px 0;\\n        }\\n        .table {\\n            width: 100%;\\n            border-collapse: collapse;\\n            margin-top: 10px;\\n        }\\n        .table th, .table td {\\n            border: 1px solid black;\\n            padding: 8px;\\n            text-align: left;\\n        }\\n        .footer {\\n            margin-top: 20px;\\n            font-size: 14px;\\n            text-align: center;\\n        }\\n        .qr {\\n            text-align: center;\\n            margin-top: 20px;\\n        }\\n        .qr img {\\n            width: 100px;\\n        }\\n    </style>\\n</head>\\n<body>\\n\\n    <div class=\\\"header\\\">\\n        <img src=\\\"https://upload.wikimedia.org/wikipedia/commons/3/3f/Logo_PDI_2019.png\\\" alt=\\\"PDI Logo\\\">\\n        <h1>Policía de Investigaciones de Chile</h1>\\n        <p>https://pdi.cl</p>\\n        <h2>CERTIFICADO DUPLICADO TARJETA TURISMO</h2>\\n        <p><strong>Certificado Gratuito</strong></p>\\n    </div>\\n\\n    <table class=\\\"table\\\">\\n        <tr><th>NOMBRES</th><td>Evelyn Roxana</td></tr>\\n        <tr><th>APELLIDO PATERNO</th><td>Moreno</td></tr>\\n        <tr><th>APELLIDO MATERNO</th><td>Eslava</td></tr>\\n        <tr><th>NACIONALIDAD</th><td>VENEZUELA</td></tr>\\n        <tr><th>PAIS DE NACIMIENTO</th><td>VENEZUELA</td></tr>\\n        <tr><th>SEXO</th><td>Mujer</td></tr>\\n        <tr><th>OCUPACIÓN O PROFESIÓN</th><td>CONSTRUCTOR CIVIL</td></tr>\\n        <tr><th>DOCUMENTO DE VIAJE PASAPORTE Y/O DNI</th><td>150754903</td></tr>\\n        <tr><th>DIRECCIÓN</th><td>Mapocho 2022, Santiago Centro, Santiago</td></tr>\\n        <tr><th>MOTIVO DEL VIAJE</th><td>OTROS</td></tr>\\n        <tr><th>FECHA DE ÚLTIMA ENTRADA AL PAÍS</th><td>01-12-2018</td></tr>\\n        <tr><th>LUGAR DE LA ÚLTIMA ENTRADA AL PAÍS</th><td>CHACALLUTA CARRETERA</td></tr>\\n    </table>\\n\\n    <p><strong>Fecha de Emisión:</strong> 13-05-2021 12:56:08</p>\\n    <p><strong>Válido indefinidamente</strong></p>\\n\\n    <div class=\\\"qr\\\">\\n        <p><strong>Código de Verificación:</strong></p>\\n        <img src=\\\"https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://pdivirtual.cerofilas.gob.cl/validador\\\" alt=\\\"QR Code\\\">\\n        <p>Verifique la validez de este documento en:</p>\\n        <p><a href=\\\"https://pdivirtual.cerofilas.gob.cl/validador\\\">https://pdivirtual.cerofilas.gob.cl/validador</a></p>\\n    </div>\\n\\n    <div class=\\\"footer\\\">\\n        <p><strong>Jefatura Nacional de Migraciones y Policía Internacional</strong></p>\\n        <p>Policía de Investigaciones de Chile</p>\\n    </div>\\n\\n</body>\\n</html>\",\n  \"pageSize\": \"oficio\",\n  \"fileName\": \"demo-certificado\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5158/api/pdf/html-json",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5158",
+					"path": [
+						"api",
+						"pdf",
+						"html-json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

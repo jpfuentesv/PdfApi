@@ -10,6 +10,7 @@ Este proyecto es una API REST construida en **ASP.NET Core 8.0** que permite gen
 - Elección de tamaño de página: `carta`, `oficio` o `a4`.
 - Nombre de archivo personalizable.
 - Validación del contenido HTML.
+- Soporte para envío de HTML como archivo `.html` o como string.
 - Documentación interactiva con Swagger UI.
 
 ---
@@ -17,7 +18,6 @@ Este proyecto es una API REST construida en **ASP.NET Core 8.0** que permite gen
 ## Requisitos
 
 - .NET 8 SDK
-- Visual Studio Code o Rider (opcional)
 - Postman o Swagger para pruebas
 
 ---
@@ -42,23 +42,37 @@ http://localhost:5158/
 
 ---
 
-## Endpoint principal
+## Endpoints disponibles
 
-**POST** `/api/pdf/html-json`
+### 🧾 POST `/api/pdf/html-json`
+**Envía HTML como string dentro de un JSON.**
 
-### Body JSON esperado:
+#### Body JSON esperado:
 ```json
 {
   "html": "<!DOCTYPE html><html>...</html>",
-  "pageSize": "oficio", // opciones: carta, oficio, a4
+  "pageSize": "oficio",
   "fileName": "demo-certificado"
 }
 ```
 
-### Validaciones:
-- `html` debe ser un documento HTML válido.
-- `fileName` no puede ser nulo o vacío.
-- `pageSize` debe ser uno de los valores permitidos.
+#### Validaciones:
+- `html`: debe ser un documento HTML válido (`<!DOCTYPE html>` obligatorio).
+- `fileName`: no puede estar vacío.
+- `pageSize`: debe ser `carta`, `oficio` o `a4`.
+
+---
+
+### 📎 POST `/api/pdf/html-file`
+**Envía un archivo HTML (`.html`) junto con los parámetros.**
+
+#### Formulario esperado (`multipart/form-data`):
+
+| Campo      | Tipo   | Descripción                                |
+|------------|--------|--------------------------------------------|
+| htmlFile   | File   | Archivo `.html` con contenido válido.      |
+| fileName   | Text   | Nombre del archivo PDF resultante.         |
+| pageSize   | Text   | Tamaño de página: `carta`, `oficio`, `a4`. |
 
 ---
 
@@ -86,7 +100,7 @@ PdfApi/
 │
 ├── Program.cs                  # Configuración de la app
 ├── appsettings.json
-├── appsettings.Development.json  
+├── appsettings.Development.json
 ```
 
 ---
@@ -101,10 +115,11 @@ PdfApi/
 
 ## Ejemplo en Postman
 
-- Tipo: `POST`
-- URL: `http://localhost:5158/api/pdf/html-json`
-- Headers: `Content-Type: application/json`
-- Body:
+### Opción 1: HTML embebido
+- **Tipo**: `POST`
+- **URL**: `http://localhost:5158/api/pdf/html-json`
+- **Headers**: `Content-Type: application/json`
+- **Body**:
 ```json
 {
   "html": "<!DOCTYPE html><html><body><h1>Demo</h1></body></html>",
@@ -113,9 +128,15 @@ PdfApi/
 }
 ```
 
+### Opción 2: Archivo HTML
+- **Tipo**: `POST`
+- **URL**: `http://localhost:5158/api/pdf/html-file`
+- **Body**: `form-data`
+
+| Key      | Tipo | Valor                  |
+|----------|------|------------------------|
+| htmlFile | File | `demo_certificado.html`|
+| fileName | Text | `certificado-final`    |
+| pageSize | Text | `oficio`               |
+
 ---
-
-## Licencia
-
-MIT License. Puedes usar, modificar y distribuir libremente este proyecto.
-

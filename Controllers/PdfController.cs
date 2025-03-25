@@ -45,7 +45,7 @@ public class PdfController : ControllerBase
         [FromForm] string fileName
     )
     {
-        var (htmlContent, error) = await RequestValidator.ValidarArchivo(
+        (string? htmlContent, IActionResult? error) = await RequestValidator.ValidarArchivo(
             htmlFile,
             fileName,
             pageSize

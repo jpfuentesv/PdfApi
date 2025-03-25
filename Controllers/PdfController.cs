@@ -9,17 +9,27 @@ namespace PdfApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PdfController(IPdfService pdfService) : ControllerBase
+public class PdfController : ControllerBase
 {
+    private readonly IPdfService _pdfService;
+
+    public PdfController(IPdfService pdfService)
+    {
+        _pdfService = pdfService;
+    }
+
     [HttpPost("html-json")]
     [SwaggerRequestExample(typeof(HtmlRequest), typeof(HtmlRequestExample))]
+    [Produces("application/pdf")]
     public IActionResult GenerarPdfDesdeHtml([FromBody] HtmlRequest request)
     {
-        var validationResult = RequestValidator.Validar(request);
+        IActionResult? validationResult = RequestValidator.Validar(request);
         if (validationResult is not null)
             return validationResult;
 
-        var pdf = pdfService.CrearPdfDesdeHtml(request.Html, request.PageSize);
-        return File(pdf, "application/pdf", $"{request.FileName}.pdf");
+        byte[] pdfBytes = _pdfService.CrearPdfDesdeHtml(request.Html, request.PageSize);
+        string fileName = $"{request.FileName}.pdf";
+
+        return File(pdfBytes, "application/pdf", fileName);
     }
 }

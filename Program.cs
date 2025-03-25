@@ -17,7 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
 {
     opt.SwaggerDoc("v1", new OpenApiInfo { Title = "PdfApi", Version = "v1" });
-    opt.ExampleFilters(); // habilita ejemplos personalizados
+    opt.ExampleFilters();
 });
 
 // Registrar los ejemplos para Swagger

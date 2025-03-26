@@ -1,6 +1,7 @@
 using iText.Html2pdf;
 using iText.Kernel.Pdf;
 using PdfApi.Models;
+using PdfApi.Services.Interface;
 
 namespace PdfApi.Services;
 

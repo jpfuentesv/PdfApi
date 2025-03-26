@@ -82,25 +82,34 @@ http://localhost:5158/
 PdfApi/
 │
 ├── Controllers/
-│   └── PdfController.cs         # Controlador principal
+│   └── PdfController.cs           # Controlador principal para generar PDFs
+│
+├── Extensions/
+│   ├── ApplicationBuilderExtensions.cs   # Configuración de middleware (Swagger, etc.)
+│   └── ServiceExtensions.cs              # Registro y configuración de servicios
 │
 ├── Models/
-│   ├── HtmlRequest.cs          # Modelo de solicitud con HTML, tamaño y nombre
-│   └── PageSizeOption.cs       # Validación y selección de tamaño de página
+│   ├── PdfFileRequest.cs          # Modelo para recibir archivo HTML vía multipart/form-data
+│   ├── PdfHtmlRequest.cs          # Modelo para recibir HTML como string en JSON
+│   └── PageSizeOption.cs          # Lógica para validar y obtener el tamaño de página (A4, oficio, etc.)
 │
 ├── Services/
-│   ├── IPdfService.cs          # Interfaz del servicio
-│   └── PdfService.cs           # Implementación de PDF con iText
+│   ├── Interface/
+│   │   └── IPdfService.cs         # Interfaz del servicio de generación de PDF
+│   └── PdfService.cs              # Implementación del servicio usando iText
 │
-├── SwaggerExamples/
-│   └── HtmlRequestExample.cs   # Ejemplo para Swagger UI
+├── Swagger/
+│   └── Examples/
+│       └── HtmlRequestExample.cs  # Ejemplo de request para Swagger UI
 │
-├── Utils/
-│   └── RequestValidator.cs     # Validaciones de la solicitud
-│
-├── Program.cs                  # Configuración de la app
+├── Program.cs                     # Punto de entrada de la aplicación (con minimal hosting)
 ├── appsettings.json
 ├── appsettings.Development.json
+├── openapi.yaml                   # Definición OpenAPI (si la usas para documentar la API)
+├── PdfApi.csproj                  # Archivo de proyecto de .NET
+├── PdfApi.sln                     # Solución (si se usa para agrupar proyectos)
+├── README.md                      # Documentación principal del proyecto
+└── .gitignore                     # Lista de archivos y carpetas que Git debe ignorar
 ```
 
 ---

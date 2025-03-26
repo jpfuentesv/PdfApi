@@ -1,45 +1,11 @@
-using Microsoft.OpenApi.Models;
-using PdfApi.Services;
-using PdfApi.SwaggerExamples;
-using Swashbuckle.AspNetCore.Filters;
+using PdfApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Servicios
-builder
-    .Services.AddControllers()
-    .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = null);
+builder.Services.AddApiServices();
 
-builder.Services.AddScoped<IPdfService, PdfService>();
-builder.Services.AddEndpointsApiExplorer();
+WebApplication app = builder.Build();
 
-// Documentación Swagger/OpenAPI
-builder.Services.AddSwaggerGen(opt =>
-{
-    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "PdfApi", Version = "v1" });
-    opt.ExampleFilters();
-});
+app.ConfigureSwaggerAndMiddleware();
 
-// Registrar los ejemplos para Swagger
-builder.Services.AddSwaggerExamplesFromAssemblyOf<HtmlRequestExample>();
-
-var app = builder.Build();
-
-// Middleware
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(opt =>
-    {
-        opt.SwaggerEndpoint("/swagger/v1/swagger.json", "PdfApi v1");
-        opt.RoutePrefix = string.Empty;
-    });
-}
-else
-{
-    app.UseHttpsRedirection();
-}
-
-app.UseAuthorization();
-app.MapControllers();
 await app.RunAsync();

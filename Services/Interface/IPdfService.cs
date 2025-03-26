@@ -1,4 +1,4 @@
-namespace PdfApi.Services;
+namespace PdfApi.Services.Interface;
 
 public interface IPdfService
 {
